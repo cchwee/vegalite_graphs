@@ -1,0 +1,34 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Temperature data of World Countries",
+    "width": 800,
+    "height": 600,
+    "data": {
+      "url": "https://raw.githubusercontent.com/cchwee/vegalite_w9/main/world.geo.json",
+      "format": {"type": "topojson", "feature": "world.geo"}
+    },
+    "transform": [
+      {
+        "lookup": "properties.name",
+        "from": {
+          "data": {
+            "url": "https://raw.githubusercontent.com/cchwee/vegalite_w9/main/country-temp-data.csv"
+          },
+          "key": "country",
+          "fields": ["temp"]
+        }
+      }
+    ],
+    "projection": {"type": "equirectangular"},
+    "mark": {"type": "geoshape"},
+    "encoding": {
+      "color": {
+        "field": "temp",
+        "type": "quantitative"
+      },
+      "tooltip": [
+        {"field": "properties.name", "type": "nominal", "title": "country"},
+        {"field": "temp", "type": "quantitative"}
+      ]
+    }
+  }
