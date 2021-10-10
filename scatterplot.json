@@ -1,0 +1,74 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "height": 400,
+    "title": "Scatterplot of World Alcohol Consumption vs Temperature for the Year 2015",
+    "data": {
+      "url": "https://raw.githubusercontent.com/cchwee/vegalite_w9/main/Temp_Alcohol_Country.csv"
+    },
+    "encoding": {
+      "x": {
+        "field": "Temperature",
+        "type": "quantitative",
+        "title": "Average Temperature"
+      },
+      "y": {
+        "field": "Alcohol Consumption per Capita",
+        "type": "quantitative",
+        "title": "Total Alcohol Consumption (Litres per Capita)"
+      },
+    "color": {
+        "field": "Country",
+        "type": "nominal"
+      }
+    },
+    "layer": [
+      {
+        "selection": {
+          "country_highlight": {
+            "type": "multi",
+            "fields":["Country"],
+            "bind": "legend"
+          }
+        },
+        "mark": "circle",
+        "encoding":{
+          "opacity": {
+              "condition": {"selection": "country_highlight", "value": 0.6},
+              "value": 0.2
+              },
+          "tooltip":[
+                {"field":"Country", "type": "nominal"},
+                {"field":"Temperature", "title": "Avg Temp", "type": "quantitative"},
+                {"field":"Alcohol Consumption per Capita", "type": "quantitative"}
+              ]
+        }
+      },
+      {
+        "mark":{
+          "type": "text",
+          "align":"right",
+          "baseline": "middle",
+          "dx": -12,
+          "fontSize": 11.5,
+          "fontStyle": "italic"
+        },
+        "encoding": {
+          "text": {"field": "Country", "type": "nominal"},
+          "color": {"value": "black"},
+          "opacity": {
+            "condition": {
+              "test": "datum['Country'] == 'Moldova' || datum['Country'] =='Malaysia'|| datum['Country'] == 'Australia' || datum['Country'] == 'United States'|| datum['Country'] == 'Nigeria'",
+              "value": 1
+            },
+            "value":0
+          },
+          "tooltip":[
+            {"field":"Country", "type": "nominal"},
+            {"field":"Temperature", "title": "Avg Temp", "type": "quantitative"},
+            {"field":"Alcohol Consumption per Capita", "type": "quantitative"}
+          ]
+        }
+      }
+    ]
+  }
